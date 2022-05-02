@@ -132,6 +132,7 @@ void rbtree_insert_fixup(rbtree *t, node_t *z) {
       }
     }
   }
+  
   t->root->color = RBTREE_BLACK;
   
 }
