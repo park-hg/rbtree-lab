@@ -21,7 +21,7 @@ rbtree *new_rbtree(void) {
 
 // rotate x's subtree to the left.
 // time complexity: O(1)
-void left_rotate(rbtree *t, node_t *x) {
+static void left_rotate(rbtree *t, node_t *x) {
   // perform left-rotation only when x has a right child.
   if (x->right != NULL) 
   {
@@ -49,9 +49,10 @@ void left_rotate(rbtree *t, node_t *x) {
 
 }
 
+
 // rotate x's subtree to the right.
 // time complexity: O(1)
-void right_rotate(rbtree *t, node_t *x) {
+static void right_rotate(rbtree *t, node_t *x) {
   // perfome right-rotation only when x has a left child.
   if (x->left != NULL)
   {
@@ -82,7 +83,7 @@ void right_rotate(rbtree *t, node_t *x) {
 
 // fix up rbtree when it has red-red violations.
 // time complexity: O(logn)
-void rbtree_insert_fixup(rbtree *t, node_t *z) {
+static void rbtree_insert_fixup(rbtree *t, node_t *z) {
   while (z->parent != NULL && z->parent->parent != NULL && z->parent->color == RBTREE_RED) {
 
     if (z->parent == z->parent->parent->left) {
@@ -173,7 +174,7 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
 }
 
 
-void post_order(rbtree *t, node_t *node) {
+static void post_order(rbtree *t, node_t *node) {
   if (node != NULL){
     post_order(t, node->left);
     post_order(t, node->right);
@@ -206,6 +207,7 @@ node_t *rbtree_find(const rbtree *t, const key_t key) {
   return NULL;
 }
 
+
 node_t *rbtree_min(const rbtree *t) {
   // TODO: implement min
   node_t *prev = NULL;
@@ -216,6 +218,7 @@ node_t *rbtree_min(const rbtree *t) {
   }
   return prev;
 }
+
 
 node_t *rbtree_max(const rbtree *t) {
   // TODO: implement max
@@ -231,7 +234,7 @@ node_t *rbtree_max(const rbtree *t) {
 
 // fix up the tree when it has red-red violation.
 // pass the parent of x as an instance to the function.
-void rbtree_erase_fixup(rbtree *t, node_t *x, node_t *px) {
+static void rbtree_erase_fixup(rbtree *t, node_t *x, node_t *px) {
   while ((x != t->root) && (x == NULL || x->color == RBTREE_BLACK)) {
     if (x == px->left) {
       node_t *w = px->right;
@@ -360,6 +363,7 @@ int rbtree_erase(rbtree *t, node_t *z) {
   if (y->color == RBTREE_BLACK) {
     rbtree_erase_fixup(t, x, y->parent);
   }
+  
   free(y);
   return 0;
 }
@@ -367,7 +371,6 @@ int rbtree_erase(rbtree *t, node_t *z) {
 
 // inorder traversal to convert a BST to an array.
 int in_order(node_t *node, key_t *arr, int i) {
-
   if (node != NULL){
     i = in_order(node->left, arr, i);
     arr[i] = node->key;
