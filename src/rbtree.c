@@ -132,7 +132,7 @@ void rbtree_insert_fixup(rbtree *t, node_t *z) {
       }
     }
   }
-  
+
   t->root->color = RBTREE_BLACK;
   
 }
@@ -173,8 +173,18 @@ node_t *rbtree_insert(rbtree *t, const key_t key) {
 }
 
 
+void post_order(rbtree *t, node_t *node) {
+  if (node != NULL){
+    post_order(t, node->left);
+    post_order(t, node->right);
+    free(node);
+  }
+}
+
+
 void delete_rbtree(rbtree *t) {
   // TODO: reclaim the tree nodes's memory
+  post_order(t, t->root);
   free(t);
 }
 
@@ -356,13 +366,13 @@ int rbtree_erase(rbtree *t, node_t *z) {
 
 
 // inorder traversal to convert a BST to an array.
-int inorder(node_t *node, key_t *arr, int i) {
+int in_order(node_t *node, key_t *arr, int i) {
 
   if (node != NULL){
-    i = inorder(node->left, arr, i);
+    i = in_order(node->left, arr, i);
     arr[i] = node->key;
     i++;
-    i = inorder(node->right, arr, i);
+    i = in_order(node->right, arr, i);
   }
   return i;
 }
@@ -371,6 +381,6 @@ int inorder(node_t *node, key_t *arr, int i) {
 // call inorder.
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
   // TODO: implement to_array
-  inorder(t->root, arr, 0);
+  in_order(t->root, arr, 0);
   return 0;
 }
