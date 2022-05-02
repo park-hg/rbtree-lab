@@ -81,7 +81,6 @@ void right_rotate(rbtree *t, node_t *x) {
 
 
 // fix up rbtree when it has red-red violations.
-// Case 2 
 // time complexity: O(logn)
 void rbtree_insert_fixup(rbtree *t, node_t *z) {
   while (z->parent != NULL && z->parent->parent != NULL && z->parent->color == RBTREE_RED) {
