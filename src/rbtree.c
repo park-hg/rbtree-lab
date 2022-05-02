@@ -284,7 +284,7 @@ void rbtree_erase_fixup(rbtree *t, node_t *x, node_t *px) {
         px = px->parent;
       } 
       else {
-        // Case 7. w is RBTREE_BLACK. left[w] is  RBTREE_RED.
+        // Case 7. w is RBTREE_BLACK. left[w] is RBTREE_RED.
         // Case 7 comes to Case 8.
         if (w->left == NULL || w->left->color == RBTREE_BLACK) {
           w->right->color = RBTREE_BLACK;
@@ -292,7 +292,7 @@ void rbtree_erase_fixup(rbtree *t, node_t *x, node_t *px) {
           left_rotate(t, w);
           w = px->left;
         }
-        // Case 8. w is RBTREE_BLACK. right[w] is  RBTREE_RED.
+        // Case 8. w is RBTREE_BLACK. right[w] is RBTREE_RED.
         w->color = px->color;
         px->color = RBTREE_BLACK;
         if (w->left != NULL) {
