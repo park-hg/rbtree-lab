@@ -285,7 +285,7 @@ static void rbtree_erase_fixup(rbtree *t, node_t *x, node_t *px) {
         w->color = RBTREE_RED;
         x = px;
         px = px->parent;
-      } 
+      }
       else {
         // Case 7. w is RBTREE_BLACK. left[w] is RBTREE_RED.
         // Case 7 comes to Case 8.
@@ -370,7 +370,7 @@ int rbtree_erase(rbtree *t, node_t *z) {
 
 
 // inorder traversal to convert a BST to an array.
-int in_order(node_t *node, key_t *arr, int i) {
+static int in_order(node_t *node, key_t *arr, int i) {
   if (node != NULL){
     i = in_order(node->left, arr, i);
     arr[i] = node->key;
@@ -381,9 +381,10 @@ int in_order(node_t *node, key_t *arr, int i) {
 }
 
 
-// call inorder.
+// call inorder
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
   // TODO: implement to_array
   in_order(t->root, arr, 0);
+  
   return 0;
 }
